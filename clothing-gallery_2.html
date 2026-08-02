@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>卓枫polo衫和外套开款需求</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --ink: #1a1a2e;
+    --paper: #faf8f5;
+    --stone: #e8e4dd;
+    --gold: #c4a35a;
+    --crimson: #8b2331;
+    --sage: #6b8e6b;
+}
+
+* { -webkit-font-smoothing: antialiased; }
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.font-serif-cn { font-family: 'Noto Serif SC', serif; }
+
+/* Hero section */
+.hero-bg {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+    position: relative;
+    overflow: hidden;
+}
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(196,163,90,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(139,35,49,0.08) 0%, transparent 50%);
+}
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Section tab */
+.tab-btn {
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(-50%);
+}
+.tab-btn.active::after { width: 100%; }
+.tab-btn.active { color: var(--gold); }
+
+/* Category chip */
+.chip {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.chip:hover {
+    transform: translateY(-1px);
+}
+.chip.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+}
+
+/* Card animations */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.card-enter {
+    animation: fadeUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Image card */
+.img-card {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+}
+.img-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -12px rgba(26,26,46,0.18);
+}
+.img-card .img-wrap {
+    overflow: hidden;
+    position: relative;
+}
+.img-card .img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,26,46,0.3) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.img-card:hover .img-wrap::after { opacity: 1; }
+.img-card img {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.img-card:hover img { transform: scale(1.06); }
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(26,26,46,0.92);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+.lightbox.open { display: flex; }
+.lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    line-height: 1;
+}
+.lightbox-close:hover { transform: rotate(90deg); }
+.lightbox-info {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+/* Section divider */
+.divider-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--stone), transparent);
+}
+
+/* Tag badge */
+.tag-badge {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Number label */
+.num-label {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 900;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+}
+
+/* Placeholder image */
+.placeholder-img {
+    background: linear-gradient(135deg, #e8e4dd 0%, #d4cfc5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a09a8e;
+    font-size: 0.75rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+    .hero-title { font-size: 2rem !important; }
+}
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Hero Section -->
+<header class="hero-bg text-white py-16 md:py-24 px-6 relative">
+    <div class="relative z-10 max-w-5xl mx-auto text-center">
+        <h1 class="hero-title font-serif-cn text-4xl md:text-6xl font-black tracking-wider">
+            卓枫polo衫和外套开款需求
+        </h1>
+    </div>
+</header>
+
+<!-- Tab Navigation -->
+<nav class="sticky top-0 z-50 bg-[var(--paper)]/95 backdrop-blur-md border-b border-[var(--stone)]">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-center gap-8 md:gap-16 h-16">
+            <button class="tab-btn active font-serif-cn text-lg md:text-xl font-bold tracking-wider py-2" data-section="polo">
+                POLO 衫
+            </button>
+            <div class="w-px h-6 bg-[var(--stone)]"></div>
+            <button class="tab-btn font-serif-cn text-lg md:text-xl font-bold tracking-wider py-2 text-gray-400" data-section="jacket">
+                外 套
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-6 py-12 md:py-16">
+
+    <!-- POLO Section -->
+    <section id="section-polo" class="gallery-section">
+        <!-- Section Header -->
+        <div class="reveal mb-10">
+            <div class="flex items-end justify-between flex-wrap gap-4">
+                <div>
+                    <div class="num-label mb-2">01 / POLO SHIRTS</div>
+                    <h2 class="font-serif-cn text-3xl md:text-4xl font-black tracking-wide">Polo 衫系列</h2>
+                    <p class="text-gray-500 text-sm mt-2">经典与时尚的完美融合，多风格多场景适用</p>
+                </div>
+                <div class="text-sm text-gray-400">
+                    共 <span class="font-bold text-[var(--ink)]" id="polo-count">0</span> 款
+                </div>
+            </div>
+            <div class="divider-line mt-6"></div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="flex flex-wrap gap-3 mb-10 reveal" id="polo-chips">
+            <button class="chip active px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="polo" data-cat="all">全部</button>
+            <button class="chip px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="polo" data-cat="short-sleeve">短袖Polo</button>
+            <button class="chip px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="polo" data-cat="long-sleeve">长袖Polo</button>
+            <button class="chip px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="polo" data-cat="striped">条纹款</button>
+            <button class="chip px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="polo" data-cat="solid">纯色款</button>
+        </div>
+
+        <!-- Image Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="polo-grid">
+        </div>
+    </section>
+
+    <!-- Jacket Section -->
+    <section id="section-jacket" class="gallery-section hidden">
+        <!-- Section Header -->
+        <div class="reveal mb-10">
+            <div class="flex items-end justify-between flex-wrap gap-4">
+                <div>
+                    <div class="num-label mb-2">02 / JACKETS & OUTERWEAR</div>
+                    <h2 class="font-serif-cn text-3xl md:text-4xl font-black tracking-wide">外套系列</h2>
+                    <p class="text-gray-500 text-sm mt-2">多变气候，从容应对——从轻夹克到厚羽绒服</p>
+                </div>
+                <div class="text-sm text-gray-400">
+                    共 <span class="font-bold text-[var(--ink)]" id="jacket-count">0</span> 款
+                </div>
+            </div>
+            <div class="divider-line mt-6"></div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="flex flex-wrap gap-3 mb-10 reveal" id="jacket-chips">
+            <button class="chip active px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="jacket" data-cat="all">全部</button>
+            <button class="chip px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="jacket" data-cat="jacket">夹克</button>
+            <button class="chip px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="jacket" data-cat="windbreaker">风衣</button>
+            <button class="chip px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="jacket" data-cat="down-jacket">羽绒服</button>
+            <button class="chip px-4 py-2 rounded-full border border-[var(--stone)] text-sm font-medium" data-section="jacket" data-cat="denim">牛仔外套</button>
+        </div>
+
+        <!-- Image Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="jacket-grid">
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-[var(--stone)] py-8 px-6 text-center">
+    <p class="text-xs text-gray-400 tracking-widest">CLOTHING GALLERY · 图片展示馆 · 2025</p>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-info" id="lightbox-info"></div>
+</div>
+
+<script>
+// ========== DATA STRUCTURE ==========
+// Replace image URLs and names with your own data
+// Each item: { name, category, image }
+// Use image: "" for placeholder, or provide a URL
+
+const poloData = [
+    { name: "经典白色短袖Polo", category: "short-sleeve", tag: "短袖", image: "" },
+    { name: "深蓝色短袖Polo", category: "short-sleeve", tag: "短袖", image: "" },
+    { name: "军绿色短袖Polo", category: "short-sleeve", tag: "短袖", image: "" },
+    { name: "黑色短袖Polo", category: "short-sleeve", tag: "短袖", image: "" },
+    { name: "藏青色长袖Polo", category: "long-sleeve", tag: "长袖", image: "" },
+    { name: "酒红色长袖Polo", category: "long-sleeve", tag: "长袖", image: "" },
+    { name: "灰蓝色长袖Polo", category: "long-sleeve", tag: "长袖", image: "" },
+    { name: "蓝白条纹Polo", category: "striped", tag: "条纹", image: "" },
+    { name: "红黑条纹Polo", category: "striped", tag: "条纹", image: "" },
+    { name: "绿白条纹Polo", category: "striped", tag: "条纹", image: "" },
+    { name: "纯黑Polo", category: "solid", tag: "纯色", image: "" },
+    { name: "纯白Polo", category: "solid", tag: "纯色", image: "" },
+];
+
+const jacketData = [
+    { name: "黑色飞行员夹克", category: "jacket", tag: "夹克", image: "" },
+    { name: "棕色皮夹克", category: "jacket", tag: "夹克", image: "" },
+    { name: "军绿工装夹克", category: "jacket", tag: "夹克", image: "" },
+    { name: "卡其色风衣", category: "windbreaker", tag: "风衣", image: "" },
+    { name: "驼色长款风衣", category: "windbreaker", tag: "风衣", image: "" },
+    { name: "深灰双排扣风衣", category: "windbreaker", tag: "风衣", image: "" },
+    { name: "黑色短款羽绒服", category: "down-jacket", tag: "羽绒", image: "" },
+    { name: "白色长款羽绒服", category: "down-jacket", tag: "羽绒", image: "" },
+    { name: "深蓝连帽羽绒服", category: "down-jacket", tag: "羽绒", image: "" },
+    { name: "经典蓝色牛仔外套", category: "denim", tag: "牛仔", image: "" },
+    { name: "浅色水洗牛仔外套", category: "denim", tag: "牛仔", image: "" },
+    { name: "黑色牛仔外套", category: "denim", tag: "牛仔", image: "" },
+];
+
+// Category labels map
+const categoryLabels = {
+    'short-sleeve': '短袖Polo',
+    'long-sleeve': '长袖Polo',
+    'striped': '条纹款',
+    'solid': '纯色款',
+    'jacket': '夹克',
+    'windbreaker': '风衣',
+    'down-jacket': '羽绒服',
+    'denim': '牛仔外套'
+};
+
+// ========== RENDER FUNCTIONS ==========
+
+function createCard(item, index, section) {
+    const delay = (index % 8) * 0.06;
+    const imgContent = item.image
+        ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" loading="lazy">`
+        : `<div class="placeholder-img w-full h-full">
+             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+               <rect x="8" y="12" width="32" height="28" rx="2"/>
+               <circle cx="24" cy="26" r="6"/>
+               <path d="M16 12l4-4h8l4 4"/>
+             </svg>
+           </div>`;
+
+    return `
+    <div class="img-card bg-white rounded-lg shadow-sm border border-[var(--stone)] card-enter"
+         style="animation-delay: ${delay}s"
+         onclick="openLightbox('${item.image}', '${item.name} · ${categoryLabels[item.category] || item.tag}')">
+        <div class="img-wrap aspect-[3/4] bg-[var(--stone)]">
+            ${imgContent}
+        </div>
+    </div>`;
+}
+
+function renderSection(section, data, currentCat) {
+    const gridId = section === 'polo' ? 'polo-grid' : 'jacket-grid';
+    const grid = document.getElementById(gridId);
+    const filtered = currentCat === 'all' ? data : data.filter(item => item.category === currentCat);
+
+    grid.innerHTML = filtered.map((item, i) => createCard(item, i, section)).join('');
+
+    // Update count
+    const countId = section === 'polo' ? 'polo-count' : 'jacket-count';
+    document.getElementById(countId).textContent = filtered.length;
+}
+
+// ========== STATE ==========
+let currentSection = 'polo';
+let poloCat = 'all';
+let jacketCat = 'all';
+
+// ========== INIT ==========
+renderSection('polo', poloData, poloCat);
+renderSection('jacket', jacketData, jacketCat);
+
+// ========== TAB SWITCHING ==========
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const section = btn.dataset.section;
+        currentSection = section;
+
+        // Update tabs
+        document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('active');
+            b.classList.add('text-gray-400');
+        });
+        btn.classList.add('active');
+        btn.classList.remove('text-gray-400');
+
+        // Show/hide sections
+        document.querySelectorAll('.gallery-section').forEach(s => s.classList.add('hidden'));
+        document.getElementById('section-' + section).classList.remove('hidden');
+
+        // Re-trigger reveal animations
+        triggerReveal();
+    });
+});
+
+// ========== CATEGORY FILTERING ==========
+document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+        const section = chip.dataset.section;
+        const cat = chip.dataset.cat;
+
+        // Update active chip within the same section
+        const container = chip.parentElement;
+        container.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        // Update state and render
+        if (section === 'polo') {
+            poloCat = cat;
+            renderSection('polo', poloData, poloCat);
+        } else {
+            jacketCat = cat;
+            renderSection('jacket', jacketData, jacketCat);
+        }
+    });
+});
+
+// ========== LIGHTBOX ==========
+function openLightbox(src, info) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const infoEl = document.getElementById('lightbox-info');
+
+    if (src) {
+        img.src = src;
+    } else {
+        // Show placeholder in lightbox
+        img.src = '';
+        img.style.background = 'linear-gradient(135deg, #e8e4dd 0%, #d4cfc5 100%)';
+        img.style.minWidth = '300px';
+        img.style.minHeight = '400px';
+    }
+    infoEl.textContent = info;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const lb = document.getElementById('lightbox');
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    // Reset lightbox img style
+    const img = document.getElementById('lightbox-img');
+    img.style.background = '';
+    img.style.minWidth = '';
+    img.style.minHeight = '';
+}
+
+document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target.id === 'lightbox') closeLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+});
+
+// ========== SCROLL REVEAL ==========
+function triggerReveal() {
+    const elements = document.querySelectorAll('.reveal');
+    elements.forEach(el => {
+        el.classList.remove('visible');
+    });
+    requestAnimationFrame(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+}
+
+triggerReveal();
+</script>
+
+</body>
+</html>
