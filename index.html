@@ -168,6 +168,8 @@
     font-size:11.5px;line-height:1.7;color:var(--ink-2);
     border-top:1px dashed var(--line);padding-top:12px;
   }
+  .path + .path{border-top:none;padding-top:8px}
+  .path .pidx{color:var(--dc);font-weight:600;font-size:11px;margin-right:2px}
   .path .sep2{color:var(--ink-3);opacity:.6}
   .path b{color:var(--ink);font-weight:600}
 
@@ -221,13 +223,21 @@ const COLORS = {"卫衣夹克":"#4a5b74","衬衫夹克":"#3f6b4f","毛呢外套"
 const DEFS = [
   {name:"卫衣夹克",
    text:"以卫衣布、毛圈布或抓绒针织面料为主，结合夹克式外观与结构设计的休闲外套。通常采用拉链或按扣门襟，可搭配立领、翻领等设计。",
-   path:["服装、鞋靴和珠宝饰品","男士时尚","男装","男士外套","男士轻型夹克","男士棉质轻型夹克（暂定）"]},
+   paths:[
+     ["服装、鞋靴和珠宝饰品","男士时尚","男装","男士外套","男士轻型夹克","男士棉质轻型夹克（暂定）"],
+     ["服装、鞋靴和珠宝饰品","男士时尚","男装","男士外套","男士运动装和功能夹克","男士运动型夹克（暂定）"]
+   ]},
   {name:"衬衫夹克",
    text:"介于衬衫与夹克之间的一类外套，通常保留衬衫的领型、门襟和口袋结构，同时采用更宽松的版型、更厚实或更挺括的面料，使其能够作为外搭单独穿着。",
-   path:["服装、鞋靴和珠宝饰品","男士时尚","男装","男士外套","男士轻型夹克","男士棉质轻型夹克（暂定）"]},
+   paths:[
+     ["服装、鞋靴和珠宝饰品","男士时尚","男装","男士外套","男士轻型夹克","男士棉质轻型夹克（暂定）"],
+     ["服装、鞋靴和珠宝饰品","男士时尚","男装","男士外套","男士运动装和功能夹克","男士运动型夹克（暂定）"]
+   ]},
   {name:"毛呢外套",
    text:"以“毛呢”（呢绒／毛织物）为主要面料，典型形态包括毛呢／羊绒大衣（切斯特大衣、双排扣大衣、牛角扣大衣、派克式呢大衣）、羊毛夹克／羊绒夹克等。",
-   path:["服装、鞋靴和珠宝饰品","男士时尚","男装","男士外套","男士羊毛夹克和外套"]}
+   paths:[
+     ["服装、鞋靴和珠宝饰品","男士时尚","男装","男士外套","男士羊毛夹克和外套"]
+   ]}
 ];
 
 const grid = document.getElementById('grid');
@@ -249,16 +259,21 @@ metaRow.innerHTML = CATS.map(c=>{
 const defsEl = document.getElementById('defs');
 defsEl.innerHTML = DEFS.map((d, i)=>{
   const c = COLORS[d.name] || '#8a7d6b';
-  const seg = d.path.map((s, j)=> (j === d.path.length-1
-      ? '<b>' + s + '</b>'
-      : s + '<span class="sep2">&rsaquo;</span>')).join('');
+  const segAll = (d.paths || [d.path]).map((p, k) => {
+    const seg = p.map((s, j)=> (j === p.length-1
+        ? '<b>' + s + '</b>'
+        : s + '<span class="sep2">&rsaquo;</span>')).join('');
+    const prefix = (d.paths && d.paths.length > 1)
+        ? '<span class="pidx">' + String.fromCharCode(0x2460 + k) + '</span>' : '';
+    return '<div class="path">' + prefix + seg + '</div>';
+  }).join('');
   return '<article class="def" data-k="' + d.name + '" style="--dc:' + c + '">'
     +   '<div class="no">' + String(i+1).padStart(2,'0') + ' &nbsp;/&nbsp; CATEGORY</div>'
     +   '<h3>' + d.name + '</h3>'
     +   '<div class="dlabel">定 义</div>'
     +   '<p>' + d.text + '</p>'
     +   '<div class="dlabel">上 款 路 径</div>'
-    +   '<div class="path">' + seg + '</div>'
+    +   segAll
     + '</article>';
 }).join('');
 
